@@ -3,3 +3,4 @@
 source "https://jocelynmiao.github.io/LOL_champ_analysis/"
 
 # gem "rails"
+gem 'jekyll'
