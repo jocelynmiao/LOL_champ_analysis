@@ -1,3 +1,4 @@
 remote_theme: pages-themes/slate@v0.2.0
+title: Analyzing Champion Impact in League of Legends Results
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one

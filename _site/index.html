@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=35f062d38402dd435ad99bf35fae73fdc5d205f4">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Analyzing Champion Impact in League of Legends Results</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Analyzing Champion Impact in League of Legends Results" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Analyzing Champion Impact in League of Legends Results" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Analyzing Champion Impact in League of Legends Results" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","headline":"Analyzing Champion Impact in League of Legends Results","name":"Analyzing Champion Impact in League of Legends Results","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          
+            <a id="forkme_banner" href="https://github.com/jocelynmiao/LOL_champ_analysis">View on GitHub</a>
+          
+
+          <h1 id="project_title">Analyzing Champion Impact in League of Legends Results</h1>
+          <h2 id="project_tagline"></h2>
+
+          
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1 id="analyzing-champion-impact-in-league-of-legends-results">Analyzing Champion Impact in League of Legends Results</h1>
+<p>Author: Jocelyn Miao</p>
+
+<h2 id="overview">Overview</h2>
+<p>This data science project conducted at UCSD focuses on exploring the relationship between match results and champion picks in the game League of Legends.</p>
+
+<h2 id="introduction">Introduction</h2>
+<p>League of Legends (LOL) is a popular multiplayer online game developed by Riot Games that has an international playerbase of millions. LOL Esports is one of the most watched Esports today, with millions of concurrent viewers per game. The dataset used in this project is developed by Oracle’s Elixir, and records information for every match played in professional LOL Esports for 2022. It captures statistics for each match, including team strategies, player performance, and meta data. One of the most important game result influences is the ‘draft’ of each team, which is the combination of 5 champions within LOL that team will play in the match. Different champions have different strengths and weaknesses, and some can ‘counter’ (have a stronger response to) other champions. Additionally, Riot implements changes to different champions in patches, in which they can decide to make them weaker or stronger.</p>
+
+<p>Thus, some champions are inherently stronger than others, and can create an advantage in deciding who wins the game. These champions are often described as ‘pick-or-ban’ because their strong influence on a game forced teams to do either option instead of ignoring the champion. This project seeks to answer if picking a champion that is frequently banned impacts the win rate of the team. Furthermore, the data analysis can create a model to predict the outcomes of matches using the draft of teams, which can be important in betting contexts.</p>
+
+<p>The dataset <code class="language-plaintext highlighter-rouge">matches</code> has 150588 rows and 164 columns, but there are 12 rows for each match (2 for teams, 10 for players). Only the teams rows will be used, since it has relevant draft information and is the focus of this project. Important columns include:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Column(s)</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">gameid</code></td>
+      <td style="text-align: left">Unique identifier for each match</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">patch</code></td>
+      <td style="text-align: left">Which game version the match was played on</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">position</code></td>
+      <td style="text-align: left">What game position each player played, or if the row describes a team (used for cleaning)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">league</code></td>
+      <td style="text-align: left">League the match is played in</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">side</code></td>
+      <td style="text-align: left">Which game side each team is on</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">champion</code></td>
+      <td style="text-align: left">Which champion each player chose for the match (used for cleaning)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ban1</code>, <code class="language-plaintext highlighter-rouge">ban2</code>, <code class="language-plaintext highlighter-rouge">ban3</code>, <code class="language-plaintext highlighter-rouge">ban4</code>, <code class="language-plaintext highlighter-rouge">ban5</code></td>
+      <td style="text-align: left">The team’s 5 bans for the match</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">pick1</code>, <code class="language-plaintext highlighter-rouge">pick2</code>, <code class="language-plaintext highlighter-rouge">pick3</code>, <code class="language-plaintext highlighter-rouge">pick4</code>, <code class="language-plaintext highlighter-rouge">pick5</code></td>
+      <td style="text-align: left">The team’s 5 picks for the match</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">result</code></td>
+      <td style="text-align: left">Indicates which team won the match (1 if won, 0 if lost)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="data-cleaning-and-exploratory-data-analysis">Data Cleaning and Exploratory Data Analysis</h2>
+<h3 id="data-cleaning">Data Cleaning</h3>
+<p>A filter will be applied to <code class="language-plaintext highlighter-rouge">position</code> for only rows that describe teams, since individual player performance is not considered. Only the relevant columns shown above will be in the final dataset. Additionally, some player picks are only listed under the <code class="language-plaintext highlighter-rouge">champions</code> column, but not under the team’s <code class="language-plaintext highlighter-rouge">pick</code> columns, so those will need to be transfered to the team’s <code class="language-plaintext highlighter-rouge">pick</code> columns. One section of <code class="language-plaintext highlighter-rouge">patch</code> is missing likely due to input mistakes, but only for a specific tournament (LDL Playoffs) which were <a href="https://lol.fandom.com/wiki/LDL/2022_Season/Summer_Playoffs">all played on 12.14</a>, so that will be filled in. The columns only used for cleaning the dataframe will be dropped.</p>
+
+<p>Here is the cleaned version of the dataframe:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">gameid</th>
+      <th style="text-align: right">patch</th>
+      <th style="text-align: left">side</th>
+      <th style="text-align: right">result</th>
+      <th style="text-align: left">league</th>
+      <th style="text-align: left">pick1</th>
+      <th style="text-align: left">pick2</th>
+      <th style="text-align: left">pick3</th>
+      <th style="text-align: left">pick4</th>
+      <th style="text-align: left">pick5</th>
+      <th style="text-align: left">ban1</th>
+      <th style="text-align: left">ban2</th>
+      <th style="text-align: left">ban3</th>
+      <th style="text-align: left">ban4</th>
+      <th style="text-align: left">ban5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">ESPORTSTMNT01_2690210</td>
+      <td style="text-align: right">12.01</td>
+      <td style="text-align: left">Blue</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: left">LCKC</td>
+      <td style="text-align: left">Renekton</td>
+      <td style="text-align: left">Samira</td>
+      <td style="text-align: left">Xin Zhao</td>
+      <td style="text-align: left">LeBlanc</td>
+      <td style="text-align: left">Leona</td>
+      <td style="text-align: left">Karma</td>
+      <td style="text-align: left">Caitlyn</td>
+      <td style="text-align: left">Syndra</td>
+      <td style="text-align: left">Thresh</td>
+      <td style="text-align: left">Lulu</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ESPORTSTMNT01_2690210</td>
+      <td style="text-align: right">12.01</td>
+      <td style="text-align: left">Red</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">LCKC</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Viego</td>
+      <td style="text-align: left">Gragas</td>
+      <td style="text-align: left">Viktor</td>
+      <td style="text-align: left">Alistar</td>
+      <td style="text-align: left">Lee Sin</td>
+      <td style="text-align: left">Twisted Fate</td>
+      <td style="text-align: left">Zoe</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Rell</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ESPORTSTMNT01_2690219</td>
+      <td style="text-align: right">12.01</td>
+      <td style="text-align: left">Blue</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: left">LCKC</td>
+      <td style="text-align: left">Lee Sin</td>
+      <td style="text-align: left">Jhin</td>
+      <td style="text-align: left">Gragas</td>
+      <td style="text-align: left">Rakan</td>
+      <td style="text-align: left">Orianna</td>
+      <td style="text-align: left">Sona</td>
+      <td style="text-align: left">Jarvan IV</td>
+      <td style="text-align: left">Caitlyn</td>
+      <td style="text-align: left">Lulu</td>
+      <td style="text-align: left">Lucian</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ESPORTSTMNT01_2690219</td>
+      <td style="text-align: right">12.01</td>
+      <td style="text-align: left">Red</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">LCKC</td>
+      <td style="text-align: left">Renekton</td>
+      <td style="text-align: left">Syndra</td>
+      <td style="text-align: left">Nidalee</td>
+      <td style="text-align: left">Leona</td>
+      <td style="text-align: left">Gangplank</td>
+      <td style="text-align: left">LeBlanc</td>
+      <td style="text-align: left">Yuumi</td>
+      <td style="text-align: left">Twisted Fate</td>
+      <td style="text-align: left">Karma</td>
+      <td style="text-align: left">Alistar</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">8401-8401_game_1</td>
+      <td style="text-align: right">12.01</td>
+      <td style="text-align: left">Blue</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">LPL</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Jarvan IV</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Syndra</td>
+      <td style="text-align: left">Gwen</td>
+      <td style="text-align: left">Renekton</td>
+      <td style="text-align: left">Lee Sin</td>
+      <td style="text-align: left">Caitlyn</td>
+      <td style="text-align: left">Jayce</td>
+      <td style="text-align: left">Camille</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="univariate-analysis">Univariate Analysis</h3>
+<p>The most picked and banned champions overall can be seen by combining all picks or bans and arranging histograms. For simplicity, these graphs will show the data over the whole year, regardless of patch changes.</p>
+
+<div class="iframe-container">
+  <iframe src="assets/univar.html" scrolling="no"></iframe>
+</div>
+
+<iframe src="assets/univar.html" width="1000" height="540" scrolling="no" frameborder="0"></iframe>
+
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">Analyzing Champion Impact in League of Legends Results maintained by <a href="https://github.com/jocelynmiao">jocelynmiao</a></p>
+        
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

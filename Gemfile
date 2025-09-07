@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-source "https://jocelynmiao.github.io/LOL_champ_analysis/"
+source "https://rubygems.org"
 
-# gem "rails"
-gem 'jekyll'
+gem "github-pages", group: :jekyll_plugins
