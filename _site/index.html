@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=35f062d38402dd435ad99bf35fae73fdc5d205f4">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=78560103158f0fde97c291945b1c8704956282f2">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Analyzing Champion Impact in League of Legends Results</title>
@@ -116,7 +116,7 @@
 
 <h2 id="data-cleaning-and-exploratory-data-analysis">Data Cleaning and Exploratory Data Analysis</h2>
 <h3 id="data-cleaning">Data Cleaning</h3>
-<p>A filter will be applied to <code class="language-plaintext highlighter-rouge">position</code> for only rows that describe teams, since individual player performance is not considered. Only the relevant columns shown above will be in the final dataset. Additionally, some player picks are only listed under the <code class="language-plaintext highlighter-rouge">champions</code> column, but not under the team’s <code class="language-plaintext highlighter-rouge">pick</code> columns, so those will need to be transfered to the team’s <code class="language-plaintext highlighter-rouge">pick</code> columns. One section of <code class="language-plaintext highlighter-rouge">patch</code> is missing likely due to input mistakes, but only for a specific tournament (LDL Playoffs) which were <a href="https://lol.fandom.com/wiki/LDL/2022_Season/Summer_Playoffs">all played on 12.14</a>, so that will be filled in. The columns only used for cleaning the dataframe will be dropped.</p>
+<p>A filter will be applied to <code class="language-plaintext highlighter-rouge">position</code> for only rows that describe teams, since individual player performance is not considered. Only the relevant columns shown above will be in the final dataset. Additionally, some player picks are only listed under the <code class="language-plaintext highlighter-rouge">champions</code> column, but not under the team’s <code class="language-plaintext highlighter-rouge">pick</code> columns, so those will need to be transfered to the team’s <code class="language-plaintext highlighter-rouge">pick</code> columns using a helper function. One section of <code class="language-plaintext highlighter-rouge">patch</code> is missing likely due to input mistakes, but only for a specific tournament (LDL Playoffs) which were <a href="https://lol.fandom.com/wiki/LDL/2022_Season/Summer_Playoffs">all played on 12.14</a>, so that will be filled in. The columns only used for cleaning the dataframe will be dropped.</p>
 
 <p>Here is the cleaned version of the dataframe:</p>
 
@@ -128,16 +128,8 @@
       <th style="text-align: left">side</th>
       <th style="text-align: right">result</th>
       <th style="text-align: left">league</th>
-      <th style="text-align: left">pick1</th>
-      <th style="text-align: left">pick2</th>
-      <th style="text-align: left">pick3</th>
-      <th style="text-align: left">pick4</th>
-      <th style="text-align: left">pick5</th>
-      <th style="text-align: left">ban1</th>
-      <th style="text-align: left">ban2</th>
-      <th style="text-align: left">ban3</th>
-      <th style="text-align: left">ban4</th>
-      <th style="text-align: left">ban5</th>
+      <th style="text-align: left">pick1…</th>
+      <th style="text-align: left">ban1…</th>
     </tr>
   </thead>
   <tbody>
@@ -148,15 +140,7 @@
       <td style="text-align: right">0</td>
       <td style="text-align: left">LCKC</td>
       <td style="text-align: left">Renekton</td>
-      <td style="text-align: left">Samira</td>
-      <td style="text-align: left">Xin Zhao</td>
-      <td style="text-align: left">LeBlanc</td>
-      <td style="text-align: left">Leona</td>
       <td style="text-align: left">Karma</td>
-      <td style="text-align: left">Caitlyn</td>
-      <td style="text-align: left">Syndra</td>
-      <td style="text-align: left">Thresh</td>
-      <td style="text-align: left">Lulu</td>
     </tr>
     <tr>
       <td style="text-align: left">ESPORTSTMNT01_2690210</td>
@@ -165,15 +149,7 @@
       <td style="text-align: right">1</td>
       <td style="text-align: left">LCKC</td>
       <td style="text-align: left">Jinx</td>
-      <td style="text-align: left">Viego</td>
-      <td style="text-align: left">Gragas</td>
-      <td style="text-align: left">Viktor</td>
-      <td style="text-align: left">Alistar</td>
       <td style="text-align: left">Lee Sin</td>
-      <td style="text-align: left">Twisted Fate</td>
-      <td style="text-align: left">Zoe</td>
-      <td style="text-align: left">Nautilus</td>
-      <td style="text-align: left">Rell</td>
     </tr>
     <tr>
       <td style="text-align: left">ESPORTSTMNT01_2690219</td>
@@ -182,15 +158,7 @@
       <td style="text-align: right">0</td>
       <td style="text-align: left">LCKC</td>
       <td style="text-align: left">Lee Sin</td>
-      <td style="text-align: left">Jhin</td>
-      <td style="text-align: left">Gragas</td>
-      <td style="text-align: left">Rakan</td>
-      <td style="text-align: left">Orianna</td>
       <td style="text-align: left">Sona</td>
-      <td style="text-align: left">Jarvan IV</td>
-      <td style="text-align: left">Caitlyn</td>
-      <td style="text-align: left">Lulu</td>
-      <td style="text-align: left">Lucian</td>
     </tr>
     <tr>
       <td style="text-align: left">ESPORTSTMNT01_2690219</td>
@@ -199,15 +167,7 @@
       <td style="text-align: right">1</td>
       <td style="text-align: left">LCKC</td>
       <td style="text-align: left">Renekton</td>
-      <td style="text-align: left">Syndra</td>
-      <td style="text-align: left">Nidalee</td>
-      <td style="text-align: left">Leona</td>
-      <td style="text-align: left">Gangplank</td>
       <td style="text-align: left">LeBlanc</td>
-      <td style="text-align: left">Yuumi</td>
-      <td style="text-align: left">Twisted Fate</td>
-      <td style="text-align: left">Karma</td>
-      <td style="text-align: left">Alistar</td>
     </tr>
     <tr>
       <td style="text-align: left">8401-8401_game_1</td>
@@ -216,28 +176,147 @@
       <td style="text-align: right">1</td>
       <td style="text-align: left">LPL</td>
       <td style="text-align: left">Jinx</td>
-      <td style="text-align: left">Jarvan IV</td>
-      <td style="text-align: left">Nautilus</td>
-      <td style="text-align: left">Syndra</td>
-      <td style="text-align: left">Gwen</td>
       <td style="text-align: left">Renekton</td>
-      <td style="text-align: left">Lee Sin</td>
-      <td style="text-align: left">Caitlyn</td>
-      <td style="text-align: left">Jayce</td>
-      <td style="text-align: left">Camille</td>
     </tr>
   </tbody>
 </table>
 
+<p>Not depicted are the rest of the <code class="language-plaintext highlighter-rouge">pick</code> and <code class="language-plaintext highlighter-rouge">ban</code> (2-5) columns for simplicity.</p>
+
 <h3 id="univariate-analysis">Univariate Analysis</h3>
 <p>The most picked and banned champions overall can be seen by combining all picks or bans and arranging histograms. For simplicity, these graphs will show the data over the whole year, regardless of patch changes.</p>
 
-<div class="iframe-container">
-  <iframe src="assets/univar.html" scrolling="no"></iframe>
-</div>
+<iframe src="assets/univar.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
 
-<iframe src="assets/univar.html" width="1000" height="540" scrolling="no" frameborder="0"></iframe>
+<p>Now it becomes more obvious who is most influential overall: Zeri, Gwen, Nautilus, Ahri, and Viego. This is composed of characters from both the top five banned or picked champions.
+Some characters are picked and banned much more than others, which makes sense considering game imbalances. The data suggests that teams are biased towards certain champions, likely because they are stronger than their counterparts.</p>
 
+<h3 id="bivariate-analysis">Bivariate Analysis</h3>
+<p>To compare multiple columns, we can look at what the win rate of each champion is by looking at the <code class="language-plaintext highlighter-rouge">results</code> column. Since champions with low pick rates will have extreme win/loss rates (for example, winning the one game a champion was picked once results in 100% win rate), I will filter the data for only champions that have been picked more than or equal to 50 times.</p>
+<iframe src="assets/bivar.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
+
+<p>From the graph, it seems that most champions are near the ideal, balanced win rate of 50% (labeled with a dotted line). However, notice that Zeri, who had the highest presence, did not have the highest win rate. Some of the popularly picked champions also had lower win rates, while unpopular champions had higher win rates. This implies that win rate may not necessarily be related pick rate. Since some champions have higher or less than 50% win rate, it can be expected that seeing a champion on a team affects their win probability for that match.</p>
+
+<h3 id="interesting-aggregates">Interesting Aggregates</h3>
+
+<p>Using <code class="language-plaintext highlighter-rouge">groupby</code> and mode, we can see the most picked and banned champions in their respective orders for each patch. This way, changes between patches become more obvious. For example, Jinx is a staple first pick for several patches, but eventually drops off (likely due to patch changes). This indicates that different patches will have different top picked or banned champions, or that teams eventually drop priority of certain champions to lower pick orders.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">patch</th>
+      <th style="text-align: left">pick1</th>
+      <th style="text-align: left">ban1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">12.01</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Caitlyn</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">12.02</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Caitlyn</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">12.03</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Zeri</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">12.04</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Zeri</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">12.05</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Zeri</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">12.06</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">[‘LeBlanc’ ‘Zeri’]</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">12.07</td>
+      <td style="text-align: left">Sion</td>
+      <td style="text-align: left">Lucian</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="assessment-of-missingness">Assessment of Missingness</h2>
+<h3 id="nmar-analysis">NMAR Analysis</h3>
+<p>I believe the columns <code class="language-plaintext highlighter-rouge">ban1</code> … <code class="language-plaintext highlighter-rouge">ban5</code> are all Not Missing At Random. In LOL Esports matches, players can choose to not ban a champion or run out of time to ban one, which would result in a missing value. These columns have no trends in missingness relating to the other columns in the dataset.</p>
+
+<h3 id="missingness-dependency">Missingness Dependency</h3>
+<p>In the original dataset, the <code class="language-plaintext highlighter-rouge">pick1</code> (including the other <code class="language-plaintext highlighter-rouge">pick</code> columns, but looking at 1 applies to all) column was missing for several matches for team rows. I will test this missingness against the columns <code class="language-plaintext highlighter-rouge">league</code> and <code class="language-plaintext highlighter-rouge">result</code>.</p>
+
+<p>First, <code class="language-plaintext highlighter-rouge">pick1</code> missingness and <code class="language-plaintext highlighter-rouge">league</code>:</p>
+
+<p><strong>Null Hypothesis</strong>: The distribution of <code class="language-plaintext highlighter-rouge">league</code> is the same when <code class="language-plaintext highlighter-rouge">pick1</code> is missing vs not missing.</p>
+
+<p><strong>Alternate Hypothesis</strong>: The distribution of <code class="language-plaintext highlighter-rouge">league</code> is different when <code class="language-plaintext highlighter-rouge">pick1</code> is missing vs not missing.</p>
+
+<p>For this project, I will be using a significance level of 0.05 and I will do a permutation test using TVD.</p>
+
+<iframe src="assets/missingbar1.html" width="500" height="500" scrolling="no" frameborder="0"></iframe>
+
+<iframe src="assets/missinggraph1.html" width="800" height="500" scrolling="no" frameborder="0"></iframe>
+
+<p>The observed TVD was 0.824 with a p-value of 0.0. From this result, we will reject the null hypothesis in favor of the alternate hypothesis, that the distribution of <code class="language-plaintext highlighter-rouge">league</code> is different when <code class="language-plaintext highlighter-rouge">pick1</code> is missing vs not missing.</p>
+
+<p>Next, <code class="language-plaintext highlighter-rouge">pick1</code> missingness and <code class="language-plaintext highlighter-rouge">result</code>:</p>
+
+<p><strong>Null Hypothesis</strong>: The distribution of <code class="language-plaintext highlighter-rouge">result</code> is the same when <code class="language-plaintext highlighter-rouge">pick1</code> is missing vs not missing.</p>
+
+<p><strong>Alternate Hypothesis</strong>: The distribution of <code class="language-plaintext highlighter-rouge">result</code> is different when <code class="language-plaintext highlighter-rouge">pick1</code> is missing vs not missing.</p>
+
+<iframe src="assets/missingbar2.html" width="500" height="500" scrolling="no" frameborder="0"></iframe>
+
+<iframe src="assets/missinggraph2.html" width="800" height="500" scrolling="no" frameborder="0"></iframe>
+
+<p>The observed TVD was 0.0 with a p-value of 0.992. From this result, we will fail to reject the null hypothesis that the distribution of <code class="language-plaintext highlighter-rouge">result</code> is the same when <code class="language-plaintext highlighter-rouge">pick1</code> is missing vs not missing.</p>
+
+<h2 id="hypothesis-testing">Hypothesis Testing</h2>
+<p>As discussed in the introduction, I will be using a permutation test to determine if picking a champion that is frequently banned (defined as the top 5 banned champions per patch) impacts the win rate of the team. Because champion power varies from patch to patch (thus each patch has different top bans), I will take that into consideration and calculate patches separately.</p>
+
+<p><strong>Null Hypothesis</strong>: The win rate of teams who picked a top five banned champion is equal to the win rate of teams that did not.</p>
+
+<p><strong>Alternate Hypothesis</strong>: The win rate of teams who picked a top five banned champion is greater than the win rate of teams that did not.</p>
+
+<iframe src="assets/hypoth.html" width="600" height="500" scrolling="no" frameborder="0"></iframe>
+
+<p>The observed TVD was 0.0516 with a p-value of 0.0. From this result, we will reject the null hypothesis in favor of the alternate hypothesis, that the win rate of teams who picked a top five banned champion is greater than the win rate of teams that did not. This suggests that teams who draft a champion that is within the top five banned champions of that patch will have an advantage against teams that did not.</p>
+
+<h2 id="framing-a-prediction-problem">Framing a Prediction Problem</h2>
+<p>My model will predict the outcomes of matches using the draft of teams. This will be binary classification as the response variable is whether the team wins or loses, which is the most important result of any match. I will be using accuracy as the main evaluation metric since win rate is more balanced at the professional gameplay level, since all players are at the top of their skill level. As a secondary, I will consider the F1-score for more insight on my model’s predictiveness. At the time of the prediction, the only thing we will know is the patch, each team’s side, and the five picks and bans of each team!</p>
+
+<h2 id="baseline-model">Baseline Model</h2>
+<p>I will create a basic model using sklearn pipeline to encode and utilize a random forest classifier with training and test sets. My features will be all five of my <code class="language-plaintext highlighter-rouge">pick</code> columns, which are all nominal variables. I will use One Hot encoding to transform the columns for the model since they are nominal.</p>
+
+<p>My model has an accuracy of 51.99%, with the F1-score being very similar. This is pretty bad considering there are only two options, so this would be slightly better than just randomly guessing who won or lost.</p>
+
+<h2 id="final-model">Final Model</h2>
+<p>I will be adding more features to the data. Currently, my dataframe considers each match in two rows, so it doesn’t account for the entire draft of a match, just one side. To fix this, I will be adjusting my dataframe to have columns for all five <code class="language-plaintext highlighter-rouge">pick</code>s and <code class="language-plaintext highlighter-rouge">enemy_pick</code>s in each row. This way, one match is one row, and we can account for opposing champion matchups. Additionally, we can add a feature from my hypothesis test, <code class="language-plaintext highlighter-rouge">picked_top_ban</code>, for both sides, as well as the side itself. My test indicated that picking a top-banned champion can benefit the win rate of a team. Now the features being used are <code class="language-plaintext highlighter-rouge">pick</code>s, <code class="language-plaintext highlighter-rouge">enemy_pick</code>s (five each), <code class="language-plaintext highlighter-rouge">side</code>, <code class="language-plaintext highlighter-rouge">picked_top_ban</code>, and <code class="language-plaintext highlighter-rouge">picked_top_ban_enemy</code>.</p>
+
+<p>To improve upon the <code class="language-plaintext highlighter-rouge">RandomForestClassifier</code> in the baseline model, I will be using <code class="language-plaintext highlighter-rouge">GridSearchCV</code> to tune the hyperparameters <code class="language-plaintext highlighter-rouge">max_depth</code>, <code class="language-plaintext highlighter-rouge">n_estimators</code>, <code class="language-plaintext highlighter-rouge">min_samples_leaf</code>, and <code class="language-plaintext highlighter-rouge">min_samples_split</code> to reduce variance.</p>
+
+<p>Now the accuracy is now 53.67%, which is 1.68% more than the baseline model. Although not my main evaluation metric, I noticed that the F1-score improved by 14.25%, which indicates improvement in predictiveness.</p>
+
+<h2 id="fairness-analysis">Fairness Analysis</h2>
+<p>I will be doing the fairness analysis with two groups: teams in Tier 1 leagues (LCS, LCK, LPL, LCP, and LEC) and teams not in Tier 1 leagues. Major tournaments will be excluded since they can contain a mix of Tier 1 and non-Tier 1 teams. I chose these categories because the level of play is regarded as much higher between the tiers and they are allocated spots at international tournaments. My evaluation metric will be F1-score since the two groups are imbalanced (there are much more below Tier 1).</p>
+
+<p><strong>Null Hypothesis</strong>: The model is fair. The F1-scores for Tier 1 and non-Teir1 teams are roughly the same, and any differences are due to random chance.</p>
+
+<p><strong>Alternative Hypothesis</strong>: The model is unfair. The F1-scores for Tier 1 and non-Teir1 teams are not the same.</p>
+
+<iframe src="assets/fairness.html" width="600" height="500" scrolling="no" frameborder="0"></iframe>
+
+<p>I got a p-value of 0.68, which is larger than my significance level of 0.05, so I will fail to reject the null hypothesis. This implies that the model predicts results for both Tier 1 and non-Tier 1 leagues similarly, making it fair.</p>
 
       </section>
     </div>
