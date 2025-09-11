@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=78560103158f0fde97c291945b1c8704956282f2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=2b3f061bfb6732fe791dbfa95d7547a02339b1df">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Analyzing Champion Impact in League of Legends Results</title>
@@ -181,21 +181,37 @@
   </tbody>
 </table>
 
-<p>Not depicted are the rest of the <code class="language-plaintext highlighter-rouge">pick</code> and <code class="language-plaintext highlighter-rouge">ban</code> (2-5) columns for simplicity.</p>
+<p>Not depicted are the rest of the <code class="language-plaintext highlighter-rouge">pick</code> and <code class="language-plaintext highlighter-rouge">ban</code> (2-5) columns for simplicity. Overall, we have 12549 valid matches to work with in this dataset.</p>
 
 <h3 id="univariate-analysis">Univariate Analysis</h3>
 <p>The most picked and banned champions overall can be seen by combining all picks or bans and arranging histograms. For simplicity, these graphs will show the data over the whole year, regardless of patch changes.</p>
 
+<iframe src="assets/univarp1.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
+
+<p>The top five most picked champions are Nautilus, Aphelios, Jinx, Viego, and Gnar. For 2022, these were the most chosen champions by players, and the data is not uniform across champions.</p>
+
+<iframe src="assets/univarp2.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
+
+<p>The top five most banned champions are Zeri, Gwen, LeBlanc, Lucian, and Ahri. Zeri and Gwen are significantly more banned than other champions, suggesting their strength. Again, the data is not uniform across all champions.</p>
+
+<p>Some characters are picked and banned much more than others, which makes sense considering game imbalances. Additionally, the top five characters banned are all ‘carry’ (ones that are considered damage play-makers) champions, suggesting that teams prioritize banning play-making champions. The data suggests that teams are biased towards certain champions, likely because they are stronger than their counterparts.</p>
+
 <iframe src="assets/univar.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
 
-<p>Now it becomes more obvious who is most influential overall: Zeri, Gwen, Nautilus, Ahri, and Viego. This is composed of characters from both the top five banned or picked champions.
-Some characters are picked and banned much more than others, which makes sense considering game imbalances. The data suggests that teams are biased towards certain champions, likely because they are stronger than their counterparts.</p>
+<p>Now it becomes more obvious who is most influential overall: Zeri, Gwen, Nautilus, Ahri, and Viego. This is composed of characters from both the top five banned or picked champions.</p>
 
 <h3 id="bivariate-analysis">Bivariate Analysis</h3>
 <p>To compare multiple columns, we can look at what the win rate of each champion is by looking at the <code class="language-plaintext highlighter-rouge">results</code> column. Since champions with low pick rates will have extreme win/loss rates (for example, winning the one game a champion was picked once results in 100% win rate), I will filter the data for only champions that have been picked more than or equal to 50 times.</p>
+
 <iframe src="assets/bivar.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
 
 <p>From the graph, it seems that most champions are near the ideal, balanced win rate of 50% (labeled with a dotted line). However, notice that Zeri, who had the highest presence, did not have the highest win rate. Some of the popularly picked champions also had lower win rates, while unpopular champions had higher win rates. This implies that win rate may not necessarily be related pick rate. Since some champions have higher or less than 50% win rate, it can be expected that seeing a champion on a team affects their win probability for that match.</p>
+
+<p>We can also look at ban rate versus win rate to see if more frequently banned champions win more. Again, I have filtered for only champions picked and banned more than 50 times.</p>
+
+<iframe src="assets/bivar2.html" width="800" height="400" scrolling="no" frameborder="0"></iframe>
+
+<p>There seems to be a very small positive correlation between win rate and ban rate, but with a lot of variability, especially since champion bans are quite skewed.</p>
 
 <h3 id="interesting-aggregates">Interesting Aggregates</h3>
 
@@ -244,6 +260,128 @@ Some characters are picked and banned much more than others, which makes sense c
       <td style="text-align: right">12.07</td>
       <td style="text-align: left">Sion</td>
       <td style="text-align: left">Lucian</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Similarly, we can see the most picked and banned champions in respective orders by <code class="language-plaintext highlighter-rouge">league</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">league</th>
+      <th style="text-align: left">pick1</th>
+      <th style="text-align: left">pick2</th>
+      <th style="text-align: left">pick3</th>
+      <th style="text-align: left">pick4</th>
+      <th style="text-align: left">pick5</th>
+      <th style="text-align: left">ban1</th>
+      <th style="text-align: left">ban2</th>
+      <th style="text-align: left">ban3</th>
+      <th style="text-align: left">ban4</th>
+      <th style="text-align: left">ban5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">LPL</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Aphelios</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Gnar</td>
+      <td style="text-align: left">Gnar</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">LeBlanc</td>
+      <td style="text-align: left">LeBlanc</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LEC</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Trundle</td>
+      <td style="text-align: left">[‘Ahri’ ‘Gwen’]</td>
+      <td style="text-align: left">Gnar</td>
+      <td style="text-align: left">Rakan</td>
+      <td style="text-align: left">Twisted Fate</td>
+      <td style="text-align: left">Yuumi</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Rakan</td>
+      <td style="text-align: left">Rakan</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LCK</td>
+      <td style="text-align: left">Aphelios</td>
+      <td style="text-align: left">Lee Sin</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Gwen</td>
+      <td style="text-align: left">Gnar</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Twisted Fate</td>
+      <td style="text-align: left">Gwen</td>
+      <td style="text-align: left">Gwen</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LCS</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Lulu</td>
+      <td style="text-align: left">Viktor</td>
+      <td style="text-align: left">Gnar</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Kalista</td>
+      <td style="text-align: left">Caitlyn</td>
+      <td style="text-align: left">LeBlanc</td>
+      <td style="text-align: left">LeBlanc</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Or by <code class="language-plaintext highlighter-rouge">side</code>. Note that seeing Zeri in Red, ban1/ban2/ban3 makes sense. This is because Blue side always picks before Red, meaning the most important ban (as seen mostly to be Zeri) will be banned in the first ban phase (first three bans).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">side</th>
+      <th style="text-align: left">pick1</th>
+      <th style="text-align: left">pick2</th>
+      <th style="text-align: left">pick3</th>
+      <th style="text-align: left">pick4</th>
+      <th style="text-align: left">pick5</th>
+      <th style="text-align: left">ban1</th>
+      <th style="text-align: left">ban2</th>
+      <th style="text-align: left">ban3</th>
+      <th style="text-align: left">ban4</th>
+      <th style="text-align: left">ban5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Blue</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Viego</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Jinx</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Kalista</td>
+      <td style="text-align: left">Gwen</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Camille</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Red</td>
+      <td style="text-align: left">Aphelios</td>
+      <td style="text-align: left">Viego</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Zeri</td>
+      <td style="text-align: left">Nautilus</td>
+      <td style="text-align: left">LeBlanc</td>
     </tr>
   </tbody>
 </table>

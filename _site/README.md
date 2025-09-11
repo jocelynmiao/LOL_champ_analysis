@@ -37,10 +37,32 @@ Here is the cleaned version of the dataframe:
 | ESPORTSTMNT01_2690219 |   12.01 | Red    |        1 | LCKC     | Renekton | LeBlanc  |
 | 8401-8401_game_1      |   12.01 | Blue   |        1 | LPL      | Jinx     | Renekton |
 
-Not depicted are the rest of the `pick` and `ban` (2-5) columns for simplicity.
+Not depicted are the rest of the `pick` and `ban` (2-5) columns for simplicity. Overall, we have 12549 valid matches to work with in this dataset.
 
 ### Univariate Analysis
 The most picked and banned champions overall can be seen by combining all picks or bans and arranging histograms. For simplicity, these graphs will show the data over the whole year, regardless of patch changes.
+
+<iframe
+  src="assets/univarp1.html"
+  width="800"
+  height="400"
+  scrolling="no"
+  frameborder="0"
+></iframe>
+
+The top five most picked champions are Nautilus, Aphelios, Jinx, Viego, and Gnar. For 2022, these were the most chosen champions by players, and the data is not uniform across champions.
+
+<iframe
+  src="assets/univarp2.html"
+  width="800"
+  height="400"
+  scrolling="no"
+  frameborder="0"
+></iframe>
+
+The top five most banned champions are Zeri, Gwen, LeBlanc, Lucian, and Ahri. Zeri and Gwen are significantly more banned than other champions, suggesting their strength. Again, the data is not uniform across all champions.
+
+Some characters are picked and banned much more than others, which makes sense considering game imbalances. Additionally, the top five characters banned are all 'carry' (ones that are considered damage play-makers) champions, suggesting that teams prioritize banning play-making champions. The data suggests that teams are biased towards certain champions, likely because they are stronger than their counterparts.
 
 <iframe
   src="assets/univar.html"
@@ -51,10 +73,10 @@ The most picked and banned champions overall can be seen by combining all picks 
 ></iframe>
 
 Now it becomes more obvious who is most influential overall: Zeri, Gwen, Nautilus, Ahri, and Viego. This is composed of characters from both the top five banned or picked champions.
-Some characters are picked and banned much more than others, which makes sense considering game imbalances. The data suggests that teams are biased towards certain champions, likely because they are stronger than their counterparts.
 
 ### Bivariate Analysis
 To compare multiple columns, we can look at what the win rate of each champion is by looking at the `results` column. Since champions with low pick rates will have extreme win/loss rates (for example, winning the one game a champion was picked once results in 100% win rate), I will filter the data for only champions that have been picked more than or equal to 50 times.
+
 <iframe
   src="assets/bivar.html"
   width="800"
@@ -64,6 +86,18 @@ To compare multiple columns, we can look at what the win rate of each champion i
 ></iframe>
 
 From the graph, it seems that most champions are near the ideal, balanced win rate of 50% (labeled with a dotted line). However, notice that Zeri, who had the highest presence, did not have the highest win rate. Some of the popularly picked champions also had lower win rates, while unpopular champions had higher win rates. This implies that win rate may not necessarily be related pick rate. Since some champions have higher or less than 50% win rate, it can be expected that seeing a champion on a team affects their win probability for that match.
+
+We can also look at ban rate versus win rate to see if more frequently banned champions win more. Again, I have filtered for only champions picked and banned more than 50 times.
+
+<iframe
+  src="assets/bivar2.html"
+  width="800"
+  height="400"
+  scrolling="no"
+  frameborder="0"
+></iframe>
+
+There seems to be a very small positive correlation between win rate and ban rate, but with a lot of variability, especially since champion bans are quite skewed.
 
 ### Interesting Aggregates
 
@@ -78,6 +112,23 @@ Using `groupby` and mode, we can see the most picked and banned champions in the
 |   12.05 | Jinx    | Zeri               |
 |   12.06 | Jinx    | ['LeBlanc' 'Zeri'] |
 |   12.07 | Sion    | Lucian             |
+
+Similarly, we can see the most picked and banned champions in respective orders by `league`.
+
+| league   | pick1    | pick2    | pick3           | pick4   | pick5   | ban1         | ban2    | ban3         | ban4    | ban5    |
+|:---------|:---------|:---------|:----------------|:--------|:--------|:-------------|:--------|:-------------|:--------|:--------|
+| LPL      | Jinx     | Aphelios | Nautilus        | Gnar    | Gnar    | Zeri         | Zeri    | Zeri         | LeBlanc | LeBlanc |
+| LEC      | Jinx     | Trundle  | ['Ahri' 'Gwen'] | Gnar    | Rakan   | Twisted Fate | Yuumi   | Zeri         | Rakan   | Rakan   |
+| LCK      | Aphelios | Lee Sin  | Nautilus        | Gwen    | Gnar    | Zeri         | Zeri    | Twisted Fate | Gwen    | Gwen    |
+| LCS      | Zeri     | Jinx     | Lulu            | Viktor  | Gnar    | Zeri         | Kalista | Caitlyn      | LeBlanc | LeBlanc |
+
+Or by `side`. Note that seeing Zeri in Red, ban1/ban2/ban3 makes sense. This is because Blue side always picks before Red, meaning the most important ban (as seen mostly to be Zeri) will be banned in the first ban phase (first three bans).
+
+| side   | pick1    | pick2   | pick3    | pick4    | pick5    | ban1    | ban2   | ban3   | ban4     | ban5    |
+|:-------|:---------|:--------|:---------|:---------|:---------|:--------|:-------|:-------|:---------|:--------|
+| Blue   | Jinx     | Viego   | Nautilus | Jinx     | Nautilus | Kalista | Gwen   | Zeri   | Nautilus | Camille |
+| Red    | Aphelios | Viego   | Nautilus | Nautilus | Nautilus | Zeri    | Zeri   | Zeri   | Nautilus | LeBlanc |
+
 
 ## Assessment of Missingness
 ### NMAR Analysis

@@ -122,7 +122,7 @@ Similarly, we can see the most picked and banned champions in respective orders 
 | LCK      | Aphelios | Lee Sin  | Nautilus        | Gwen    | Gnar    | Zeri         | Zeri    | Twisted Fate | Gwen    | Gwen    |
 | LCS      | Zeri     | Jinx     | Lulu            | Viktor  | Gnar    | Zeri         | Kalista | Caitlyn      | LeBlanc | LeBlanc |
 
-Or by `side`. Note that seeing Zeri in Red, ban1|ban2|ban3 makes sense. This is because Blue side always picks before Red, meaning the most important ban (as seen mostly to be Zeri) will be banned in the first ban phase (first three bans).
+Or by `side`. Note that seeing Zeri in Red, ban1/ban2/ban3 makes sense. This is because Blue side always picks before Red, meaning the most important ban (as seen mostly to be Zeri) will be banned in the first ban phase (first three bans).
 
 | side   | pick1    | pick2   | pick3    | pick4    | pick5    | ban1    | ban2   | ban3   | ban4     | ban5    |
 |:-------|:---------|:--------|:---------|:---------|:---------|:--------|:-------|:-------|:---------|:--------|
